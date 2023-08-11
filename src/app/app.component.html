@@ -1,0 +1,36 @@
+<div class="position-fixed w-100 myBg z-1">
+  <header class="container d-flex flex-wrap justify-content-center py-3 ">
+    <a href="/" class="col d-flex align-items-center link-body-emphasis text-decoration-none">
+      <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+      <span class="fs-4 text-white">Very cool website</span>
+    </a>
+
+    <p class="col text-white">We have <span class="text-success">cool </span><span class="text-warning">new </span><span class="text-danger"> updates</span></p>
+
+  </header>
+</div>
+
+<div class="big-logo-bar">
+    
+  <img class="w-100 mt-5" alt="tickets" 
+  src="https://www.newamsterdamtheatre.org/wp-content/uploads/2017/01/conert-ticket-info.png"> 
+
+</div>
+
+<div class="w-100 myBg py-3 d-flex flex-wrap justify-content-center border-bottom">
+  <ul class="nav nav-pills text-decoration-none">
+      <li class="nav-item text-success"><a routerLink="/home" class="nav-link" aria-current="page">Home</a></li>
+      <li class="nav-item text-warning"><a routerLink="/customer" class="nav-link">Create a ticket</a></li>
+      <li class="nav-item text-danger"><a routerLink="/employee" class="nav-link">Employee Login</a></li>
+    </ul>
+</div>
+
+  <router-outlet></router-outlet>
+
+<footer class="w-100 myBg d-flex flex-wrap justify-content-center py-3">
+  <ul class="nav nav-pills text-decoration-none">
+    <li class="nav-item text-success"><a routerLink="/home" class="nav-link" aria-current="page">Home</a></li>
+    <li class="nav-item text-warning"><a routerLink="/customer" class="nav-link">Create a ticket</a></li>
+    <li class="nav-item text-danger"><a routerLink="/employee" class="nav-link">Employee Login</a></li>
+  </ul>
+</footer>

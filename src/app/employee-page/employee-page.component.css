@@ -1,0 +1,90 @@
+.numTicketTable {
+    width: 40%;
+}
+
+.emptyItems {
+    height: 75vh
+}
+
+.myBG {
+    background-color: white;
+    animation: 1s infinite alternate ease-out;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.15);
+
+}
+
+.myBG_Medium {
+    animation: 4s infinite alternate ease-out breathing-med;
+    background-color: rgb(255, 255, 248);
+    border: solid 1px rgb(255, 255, 119);
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.15);
+}
+@keyframes breathing-med {
+    from {
+        background-color: rgb(255, 255, 248);
+        border: solid 1px rgb(255, 255, 119);
+        box-shadow: 0 0 1rem rgba(255, 255, 57, 0.151);
+    }
+    to {
+        background-color: white;
+        border: solid 1px white;
+    }
+}
+
+.myBG_High {
+    animation: 2s infinite alternate ease-out breathing-high;
+    background-color: rgb(255, 233, 224);
+    border: solid 2px rgb(255, 185, 119);
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.15);
+}
+@keyframes breathing-high {
+    from {
+        background-color: rgb(255, 233, 224);
+        border: solid 2px rgb(255, 185, 119);
+        box-shadow: 0 0 1rem rgba(255, 163, 76, 0.274);
+    }
+    to {
+        background-color: rgb(255, 255, 255);
+        border: solid 2px rgb(255, 222, 192);
+        box-shadow: 0 0 1rem rgba(255, 163, 76, 0.055);
+    }
+}
+
+.myBG_Critical {
+    animation: 1s infinite alternate ease-out breathing-crit;
+    background-color: rgb(255, 207, 207);
+    border: solid 3px rgb(255, 119, 119);
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.15);
+}
+@keyframes breathing-crit {
+    from {
+        background-color: rgb(255, 207, 207);
+        border: solid 3px rgb(255, 119, 119);
+        box-shadow: 0 0 1rem rgba(255, 86, 86, 0.404);
+    }
+    to {
+        background-color: rgb(255, 241, 241);
+        border: solid 3px rgb(255, 206, 206);
+        box-shadow: 0 0 1rem rgba(255, 86, 86, 0.274);
+    }
+}
+
+.desc {
+    max-height: 200px;
+}
+
+.status {
+    background-color: grey;
+}
+.status_Open {
+    background-color: rgb(49, 212, 49);
+}
+.status_Pending {
+    background-color: rgb(228, 203, 61);
+}
+.status_OnHold {
+    background-color: rgb(207, 100, 0);
+}
+.status_Closed{
+    background-color: rgb(151, 0, 0);
+}

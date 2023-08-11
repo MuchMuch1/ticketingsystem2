@@ -1,0 +1,257 @@
+<mat-drawer-container class="w-100 h-100 z-0 position-relative overflow-hidden">
+        
+    <!-- Main stuff -->
+    <div class="container position-absolute top-0 start-50 mt-5 translate-middle-x">
+        <ng-container *ngIf="tickets.length > 0; else emptyItems">
+            <!-- Check to see if query is empty. This happens if query is not empty -->
+            <ng-container *ngFor="let t of tickets">
+                <!-- Container for Ticket -->
+                <div class="m-4 rounded-4 ps-3 pe-3" [ngClass]="priorityColor(t.priority)">
+                    <!-- Top Row -->
+                    <div class="row border-bottom">
+                        <!-- ID and Status -->
+                        <div class="col-2 p-3 justify-content-center text-center align-items-center">
+                            <h1 class>
+                                <p>Ticket ID: {{ t.t_id }}</p>
+                            </h1>
+                            <div class="text-white p-2 w-50 m-auto rounded-2 d-flex justify-content-center"
+                                [ngClass]="statusColor(t.status)">
+                                <b>{{ t.status }}</b>
+                            </div>
+                        </div>
+                        <!-- Name, Email on top, Description on bottom -->
+                        <div class="col-6 p-3">
+                            <span class="display-6">{{ t.name }}</span> <br>
+                            <span class="text-secondary lead"> {{ t.email }}</span>
+                            <p class="desc text-secondary mt-2 ps-2 pb-2 pe-2 overflow-scroll">{{ t.desc }}</p>
+                        </div>
+                        <!-- On the Right Side, is the dates -->
+                        <div class="col p-3 pe-4 text-end text-secondary">
+                            (Created) {{ t.date }} <br>
+                            (Edited) {{ t.dateLastEdit }}
+                        </div>
+                    </div>
+                    <!-- Bottom Row -->
+                    <div class="row">
+                        <!-- Actions (Edit and Delete) -->
+                        <div class="col-2 p-3 border-end justify-content-center text-center">
+                            <button class="btn btn-secondary mx-1" (click)="findID(t.t_id); editToggle(); drawer.toggle()"
+                            [disabled]="editToggled">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                            <button class="btn btn-danger mx-1" (click)="findID(t.t_id); delete()"
+                            [disabled]="editToggled">
+                                <i class="bi bi-trash-fill"></i>
+                            </button>
+                        </div>
+                        <!-- Type and Category -->
+                        <div class="col-2 p-3 border-end justify-content-center text-center">
+                            <span class="text-secondary">Type: </span>{{ t.type }} <br>
+                            <span class="text-secondary">Category: </span> {{ t.category }}
+                        </div>
+                        <!-- Priority -->
+                        <div class="col-1 p-3 border-end justify-content-center text-center">
+                            <span class="text-secondary">Priority: </span>{{ t.priority }}
+                        </div>
+                        <!-- Image -->
+                        <div class="col-2 p-3 border-end justify-content-center text-center">
+                            <span class="text-secondary">Image Attachment</span> <br>
+                            <button class="btn btn-secondary btn-sm w-100" [disabled]="hasImage(t.t_id)"
+                                id="btn_{{ t.t_id }}" (click)="findID(t.t_id); openDialog()">View Image</button>
+                        </div>
+                        <!-- Employee -->
+                        <div class="col-3 p-3 border-end justify-content-center text-center">
+                            <span class="text-secondary">Employee Assigned: </span>{{ t.employeeAssigned }}
+                        </div>
+                        <!-- Due Date -->
+                        <div class="col-2 p-3 justify-content-center text-center">
+                            <span class="text-secondary">Due Date: </span>{{ t.dateDue }}
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </ng-container>
+        <!-- If query is empty... -->
+        <ng-template #emptyItems>
+            <ng-container class="container d-flex h-100 w-100 emptyItems"
+            *ngIf="tickets.length === 0">
+                <div class="top-50 start-50 align-middle text-center">
+                    <img src="https://media.tenor.com/DHkIdy0a-UkAAAAC/loading-cat.gif" alt="" class="w-75">
+                    <h1>Empty Results</h1>
+                    <p>Try another query.</p>
+                </div>
+            </ng-container>
+        </ng-template>
+    </div>
+    <!-- Counting stuff -->
+    <header class="float-end p-4 top-0 bottom-0 end-0 position-sticky">
+        <button mat-flat-button (click)="changeState()" class="border bg-danger float-end position-absolute end-0">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <div class="bd-callout bd-callout-info
+        overflow-hidden bg-white rounded shadow" [@headergrow]="state">
+            <h1>Ticket Count: {{ numOfTickets }}</h1>
+            <table class="table table-bordered w-50 float-start">
+                <thead>
+                    <tr>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table-secondary">
+                        <td>Closed</td>
+                        <td>{{ ticketClosed }}</td>
+                    </tr>
+                    <tr class="table-success">
+                        <td>Open</td>
+                        <td>{{ ticketOpen }}</td>
+                    </tr>
+                    <tr class="table-warning">
+                        <td>Pending</td>
+                        <td>{{ ticketPending }}</td>
+                    </tr>
+                    <tr class="table-danger">
+                        <td>On Hold</td>
+                        <td>{{ ticketOnHold }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-bordered w-50 float-start">
+                <thead>
+                    <tr>
+                        <th>Priority</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table-secondary">
+                        <td>Low</td>
+                        <td>{{ ticketLow }}</td>
+                    </tr>
+                    <tr class="table-success">
+                        <td>Medium</td>
+                        <td>{{ ticketMed }}</td>
+                    </tr>
+                    <tr class="table-warning">
+                        <td>High</td>
+                        <td>{{ ticketHigh }}</td>
+                    </tr>
+                    <tr class="table-danger">
+                        <td>Critical</td>
+                        <td>{{ ticketCrit }}</td>
+                    </tr>
+                    <tr class="table-light">
+                        <td>Unassigned</td>
+                        <td>{{ ticketNo }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </header>
+    <!-- Sorting and Filtering -->
+    <section class="position-sticky top-0 z-2 rounded shadow w-50 start-50 translate-middle-x bg-white">
+        <div [@topgrow]="topState" class="overflow-hidden row">
+            <div class="col">
+                <h2>Filter</h2>
+                
+                <div class="form-floating float-start w-auto m-1">
+                    <select class="form-select" [(ngModel)]="filterStatus" id="filterStatus">
+                        <option value="All">All</option>
+                        <option value="Open">Open</option>
+                        <option value="Pending">Pending</option>
+                        <option value="On Hold">On Hold</option>
+                        <option value="Closed">Closed</option>
+                    </select>    
+                    <label for="filterStatus">Status</label>
+                </div>
+                <div class="form-floating float-start w-auto m-1">
+                    <select class="form-select" [(ngModel)]="filterType" id="filterType">
+                        <option value="All">All</option>
+                        <option value="Bug">Bug</option>
+                        <option value="Suggestion">Suggestion</option>
+                        <option value="Enhancement">Enhancement</option>
+                        <option value="Etc">Etc</option>
+                    </select>   
+                    <label for="filterType">Type</label>
+                </div>
+                <div class="form-floating float-start w-auto m-1">
+                    <select class="form-select" [(ngModel)]="filterCategory" id="filterCategory">
+                        <option value="All">All</option>
+                        <option value="Order">Your Order</option>
+                        <option value="Schedule">Scheduling</option>
+                        <option value="Finance">Finance</option>
+                        <option value="Website">Website</option>
+                        <option value="Employee">About our Employee</option>
+                        <option value="Etc">Etc</option>
+                    </select>     
+                    <label for="filterCategory">Category</label>
+                </div>          
+                <div class="form-floating float-start w-auto m-1">      
+                    <select class="form-select" [(ngModel)]="filterPriority" id="filterPriority">
+                        <option value="All">All</option>
+                        <option value="Unassigned">Unassigned</option>
+                        <option value="Low">Low</option>
+                        <option value="Medium">Medium</option>
+                        <option value="High">High</option>
+                        <option value="Critical">Critical</option>
+                    </select>    
+                    <label for="filterPriority">Priority</label>  
+                </div>
+                <button (click)="filterTickets()" class="btn btn-primary m-1 w-100">Filter</button>               
+            </div>
+            <div class="col">
+                <h2>Sort</h2>
+                <button class="btn btn-secondary m-1"
+                (click)="sortedTickets('t_id')">By ID</button>
+                <button class="btn btn-secondary m-1"
+                (click)="sortedTickets('status')">By Status</button>
+                <button class="btn btn-secondary m-1"
+                (click)="sortedTickets('type')">By Type</button>
+                <button class="btn btn-secondary m-1"
+                (click)="sortedTickets('category')">By Category</button>
+                <button class="btn btn-secondary m-1"
+                (click)="sortedTickets('priority')">By Priority</button>
+            </div>
+        </div>
+        <button mat-flat-button class="w-100" (click)="changeTopState()"><mat-icon>expand_more</mat-icon></button>
+        
+    </section>
+    <!-- Edit Form -->
+    <mat-drawer #drawer mode="side" class="w-25 p-3">
+        <!-- Edit form is shown when edit button is clicked, opening the expanded section -->
+        <h1>Edit this Ticket [{{ foundID }}]</h1>
+        <form [formGroup]="editForm" (ngSubmit)="onEdit()" novalidate>
+            <select id="ticketType" formControlName="type" class="form-select w-75 m-2" [(ngModel)]="editType">
+                <option value="">--Select a Type (Optional) --</option>
+                <option id="btn_edit_Bug" value="Bug">Bug</option>
+                <option id="btn_edit_Suggestion" value="Suggestion">Suggestion</option>
+                <option id="btn_edit_Enhancement" value="Enhancement">Enhancement</option>
+            </select>
+            <select id="ticketStatus" formControlName="status" class="form-select w-75 m-2" [(ngModel)]="editStatus">
+                <option value="">--Select a Status--</option>
+                <option value="Open">Open</option>
+                <option value="Pending">Pending</option>
+                <option value="On Hold">On Hold</option>
+                <option value="Closed">Closed</option>
+            </select>
+            <select id="ticketSPriority" formControlName="priority" class="form-select w-75 m-2" [(ngModel)]="editPriority">
+                <option value="">--Select a Priority--</option>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+                <option value="Critical">Critical</option>
+            </select>
+            <select id="ticketSEmployee" formControlName="employeeAssigned" class="form-select w-75 m-2" [(ngModel)]="editEmployee">
+                <option value="">--Select an Employee--</option>
+                <option value="Employee 1">Low</option>
+                <option value="Juan">Juan</option>
+                <option value="John Doe">John Doe</option>
+                <option value="Employee 4">Employee 4</option>
+            </select>
+            <label for="dateDue">Date Due:</label>
+            <input type="date" id="ticketdateDue" formControlName="dateDue" class="form-control w-75 m-2">
+            <input type="submit" value="Confirm Edit" (click)="drawer.toggle()" class="m-1 btn btn-warning">
+            <input type="reset" value="Cancel" (click)="drawer.toggle(); editToggle()" class="m-1 btn btn-secondary">
+        </form>
+    </mat-drawer>
+
+</mat-drawer-container>

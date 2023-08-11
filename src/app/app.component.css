@@ -1,0 +1,9 @@
+header {
+  z-index: 3;
+}
+
+.myBg {
+    background-color: #313131;
+    height: auto;
+    border: solid 5px #171717;
+}

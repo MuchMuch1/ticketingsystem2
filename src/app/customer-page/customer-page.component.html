@@ -1,0 +1,58 @@
+<div class="container">
+
+    <br>
+    <br>
+    <section class="row">
+        <div class="col-4">
+            <form [formGroup]="ticketForm" (ngSubmit)="onSubmit()" novalidate>
+                <!-- Heading -->
+                <h1>Create a Ticket</h1>
+                <p>Your feedback is greatly appreciated. Tip: Be as clear as possible and highlight your specific concerns.</p>
+
+                <!-- Name -->
+                <label for="ticketName" class="form-label">Name:</label> <br>
+                <input type="text" class="form-control" id="ticketName" formControlName="name" placeholder="Required">
+                <br>
+                <!-- Email -->
+                <label for="ticketEmail" class="form-label">Email:</label> <br>
+                <input type="email" class="form-control" id="ticketEmail" formControlName="email" placeholder="Required">
+                <br>
+                <!-- Select Type -->
+                <select id="ticketType" formControlName="type" class="form-select">
+                    <option value="">--Select a Type--</option>
+                    <option value="Bug">Bug</option>
+                    <option value="Suggestion">Suggestion</option>
+                    <option value="Enhancement">Enhancement</option>
+                    <option value="Etc">Etc</option>
+                </select>
+                <br>
+                <!-- Select Category -->
+                <select id="ticketCategory" formControlName="category" class="form-select">
+                    <option value="">--Select a Category--</option>
+                    <option value="Order">Your Order</option>
+                    <option value="Schedule">Scheduling</option>
+                    <option value="Finance">Finance</option>
+                    <option value="Website">Website</option>
+                    <option value="Employee">About our Employee</option>
+                    <option value="Etc">Etc</option>
+                </select>
+                <br>
+                <!-- Description -->
+                <label for="ticketDesc">Description:</label> <br>
+                <textarea id="ticketDesc" formControlName="desc" class="form-control" placeholder="Required"></textarea>
+                <br>
+                <!-- Input Image -->
+                <label for="ticketImg" class="form-label">Image Link:</label> <br>
+                <input type="text" class="form-control" id="ticketImg" formControlName="img" placeholder="Optional">
+                <br>
+                <!-- Submit -->
+                <input type="submit" value="Submit" class="me-1 w-50 btn btn-warning">
+                <input type="reset" value="Reset" class="ms-1 btn btn-primary">
+            </form>
+        </div>
+
+    </section>
+
+</div>
+
+<br/><br/><br/><br/><br/><br/>

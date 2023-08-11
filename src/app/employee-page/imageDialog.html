@@ -1,0 +1,11 @@
+<mat-dialog-content>
+    <img [src]="imageLink" (error)="onImageError()"
+    onerror="this.src='https://i.ytimg.com/vi/dl9A24IdJqs/maxresdefault.jpg'"
+     class="w-100" alt=""
+    >
+    <h1>{{errormessage}}</h1>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close>Close</button>
+    </div>
+</mat-dialog-content>
+
